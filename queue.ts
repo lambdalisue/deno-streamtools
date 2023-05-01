@@ -39,6 +39,10 @@ export class Queue<T> {
     return this.#closed;
   }
 
+  get size(): number {
+    return this.#queue.length;
+  }
+
   get readable(): ReadableStream<T> {
     if (!this.#readable) {
       this.#readable = new ReadableStream<T>({

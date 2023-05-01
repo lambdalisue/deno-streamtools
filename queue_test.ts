@@ -13,13 +13,19 @@ import {
 Deno.test("Queue enqueue and dequeue", async () => {
   const q = new Queue<number>();
 
+  assertEquals(q.size, 0);
   q.enqueue(1);
+  assertEquals(q.size, 1);
   q.enqueue(2);
+  assertEquals(q.size, 2);
   q.enqueue(3);
-
+  assertEquals(q.size, 3);
   assertEquals(await q.dequeue(), 1);
+  assertEquals(q.size, 2);
   assertEquals(await q.dequeue(), 2);
+  assertEquals(q.size, 1);
   assertEquals(await q.dequeue(), 3);
+  assertEquals(q.size, 0);
 });
 
 Deno.test("Queue closed", async () => {
