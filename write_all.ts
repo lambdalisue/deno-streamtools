@@ -1,3 +1,8 @@
+export type WriteAllOptions = {
+  /** The size of each chunk to write to the stream */
+  chunkSize?: number;
+};
+
 /**
  * Write all data from a Uint8Array to a writable stream.
  *
@@ -8,10 +13,16 @@
 export async function writeAll(
   stream: WritableStream<Uint8Array>,
   data: Uint8Array,
+  options: WriteAllOptions = {},
 ): Promise<void> {
+  const { chunkSize = 1024 } = options;
   const input = new ReadableStream({
     start(controller) {
-      controller.enqueue(data);
+      let offset = 0;
+      while (offset < data.length) {
+        controller.enqueue(data.subarray(offset, offset + chunkSize));
+        offset += chunkSize;
+      }
       controller.close();
     },
   });
