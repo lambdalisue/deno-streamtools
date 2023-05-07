@@ -1,3 +1,4 @@
+export * from "./channel.ts";
 export * from "./collect.ts";
 export * from "./pop.ts";
 export * from "./provide.ts";
