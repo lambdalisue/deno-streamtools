@@ -10,7 +10,7 @@ Deno.test("boundedChannel", async (t) => {
   await t.step(
     "returns a readable stream and a writable stream that are connected to each other",
     async () => {
-      const [reader, writer] = boundedChannel<number>(5);
+      const { reader, writer } = boundedChannel<number>(5);
       await provide(writer, [1, 2, 3]);
       assertEquals(await collect(reader), [1, 2, 3]);
     },
@@ -19,7 +19,7 @@ Deno.test("boundedChannel", async (t) => {
   await t.step(
     "the writer waits until the number of items in the channel become less than the capacity",
     async () => {
-      const [reader, writer] = boundedChannel<number>(5);
+      const { reader, writer } = boundedChannel<number>(5);
       await provide(writer, [1, 2, 3, 4, 5], { preventClose: true });
       const pushPromise = push(writer, 6);
       assertEquals(await promiseState(pushPromise), "pending");

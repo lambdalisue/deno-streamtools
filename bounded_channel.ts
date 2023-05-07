@@ -1,6 +1,7 @@
 import { deferred } from "https://deno.land/std@0.186.0/async/mod.ts";
 import { Queue } from "https://deno.land/x/async@v2.0.2/queue.ts";
 import { Notify } from "https://deno.land/x/async@v2.0.2/notify.ts";
+import type { Channel } from "./channel.ts";
 
 /**
  * Creates a new bounded channel, which is a pair of a readable and writable stream with a fixed capacity.
@@ -10,7 +11,7 @@ import { Notify } from "https://deno.land/x/async@v2.0.2/notify.ts";
  * import { push } from "./push.ts";
  * import { pop } from "./pop.ts";
  *
- * const [reader, writer] = boundedChannel<number>(3);
+ * const { reader, writer } = boundedChannel<number>(3);
  *
  * await push(writer, 1);
  * await push(writer, 2);
@@ -27,12 +28,9 @@ import { Notify } from "https://deno.land/x/async@v2.0.2/notify.ts";
  *
  * @template T The type of the elements that the channel can handle.
  * @param {number} capacity The maximum number of elements that the channel can hold at any time.
- * @returns {[ReadableStream<T>, WritableStream<T>]} A tuple containing a readable stream and a writable stream.
+ * @returns {{ reader: ReadableStream<T>, writer: WritableStream<T> }} A channel object containing a readable stream and a writable stream.
  */
-export function boundedChannel<T>(capacity: number): [
-  ReadableStream<T>,
-  WritableStream<T>,
-] {
+export function boundedChannel<T>(capacity: number): Channel<T> {
   const closed = Symbol("closed");
   const notify = new Notify();
   const waiter = deferred<typeof closed>();
@@ -61,5 +59,7 @@ export function boundedChannel<T>(capacity: number): [
       waiter.resolve(closed);
     },
   });
-  return [reader, writer];
+  return { reader, writer };
 }
+
+export type { Channel };

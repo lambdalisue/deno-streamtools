@@ -1,6 +1,11 @@
 import { deferred } from "https://deno.land/std@0.186.0/async/mod.ts";
 import { Queue } from "https://deno.land/x/async@v2.0.2/queue.ts";
 
+export type Channel<T> = {
+  reader: ReadableStream<T>;
+  writer: WritableStream<T>;
+};
+
 /**
  * Creates a new channel, which is a pair of a readable and writable stream.
  *
@@ -9,7 +14,7 @@ import { Queue } from "https://deno.land/x/async@v2.0.2/queue.ts";
  * import { push } from "./push.ts";
  * import { pop } from "./pop.ts";
  *
- * const [reader, writer] = channel<number>();
+ * const { reader, writer } = channel<number>();
  *
  * await push(writer, 1);
  * await push(writer, 2);
@@ -20,12 +25,9 @@ import { Queue } from "https://deno.land/x/async@v2.0.2/queue.ts";
  * ```
  *
  * @template T The type of the elements that the channel can handle.
- * @returns {[ReadableStream<T>, WritableStream<T>]} A tuple containing a readable stream and a writable stream.
+ * @returns {{ reader: ReadableStream<T>, writer: WritableStream<T> }} A channel object containing a readable stream and a writable stream.
  */
-export function channel<T>(): [
-  ReadableStream<T>,
-  WritableStream<T>,
-] {
+export function channel<T>(): Channel<T> {
   const closed = Symbol("closed");
   const waiter = deferred<typeof closed>();
   const queue = new Queue<T>();
@@ -47,5 +49,5 @@ export function channel<T>(): [
       waiter.resolve(closed);
     },
   });
-  return [reader, writer];
+  return { reader, writer };
 }

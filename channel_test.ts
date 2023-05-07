@@ -7,7 +7,7 @@ Deno.test("channel", async (t) => {
   await t.step(
     "returns a readable stream and a writable stream that are connected to each other",
     async () => {
-      const [reader, writer] = channel<number>();
+      const { reader, writer } = channel<number>();
       await provide(writer, [1, 2, 3]);
       assertEquals(await collect(reader), [1, 2, 3]);
     },
