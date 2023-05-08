@@ -10,7 +10,7 @@ This is a [Deno][deno] module that provides utilities for handling Streams API.
 
 ## Usage
 
-### channel/boundedChannel
+### channel
 
 `channel` creates a new channel, which is a pair of a readable and writable
 stream.
@@ -28,29 +28,6 @@ await push(writer, 3);
 console.log(await pop(reader)); // 1
 console.log(await pop(reader)); // 2
 console.log(await pop(reader)); // 3
-```
-
-`boundedChannel` creates a new bounded channel, which is a pair of a readable
-and writable stream with a fixed capacity.
-
-```ts
-import { boundedChannel } from "./bounded_channel.ts";
-import { push } from "./push.ts";
-import { pop } from "./pop.ts";
-
-const [reader, writer] = boundedChannel<number>(3);
-
-await push(writer, 1);
-await push(writer, 2);
-await push(writer, 3);
-// The following line never resolves because the channel is full.
-//await push(writer, 4);
-console.log(await pop(reader)); // 1
-// Now the channel is not full anymore so the following line resolves.
-await push(writer, 4);
-console.log(await pop(reader)); // 2
-console.log(await pop(reader)); // 3
-console.log(await pop(reader)); // 4
 ```
 
 ### collect/provide

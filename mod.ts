@@ -1,4 +1,3 @@
-export * from "./bounded_channel.ts";
 export * from "./channel.ts";
 export * from "./collect.ts";
 export * from "./pop.ts";
