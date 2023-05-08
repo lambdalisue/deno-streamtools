@@ -1,6 +1,3 @@
-import { deferred } from "https://deno.land/std@0.186.0/async/mod.ts";
-import { Queue } from "https://deno.land/x/async@v2.0.2/queue.ts";
-
 export type Channel<T> = {
   reader: ReadableStream<T>;
   writer: WritableStream<T>;
@@ -25,29 +22,29 @@ export type Channel<T> = {
  * ```
  *
  * @template T The type of the elements that the channel can handle.
+ * @param {QueuingStrategy<T>} [writableStrategy] The strategy for the writable side of the channel.
+ * @param {QueuingStrategy<T>} [readableStrategy] The strategy for the readable side of the channel.
  * @returns {{ reader: ReadableStream<T>, writer: WritableStream<T> }} A channel object containing a readable stream and a writable stream.
  */
-export function channel<T>(): Channel<T> {
-  const closed = Symbol("closed");
-  const waiter = deferred<typeof closed>();
-  const queue = new Queue<T>();
+export function channel<T>(
+  writableStrategy?: QueuingStrategy<T>,
+  readableStrategy?: QueuingStrategy<T>,
+): Channel<T> {
+  writableStrategy ??= new CountQueuingStrategy({ highWaterMark: 1 });
+  readableStrategy ??= new CountQueuingStrategy({ highWaterMark: 0 });
+  let readerController: ReadableStreamDefaultController<T>;
   const reader = new ReadableStream<T>({
-    async pull(controller) {
-      const chunk = await Promise.race([queue.pop(), waiter]);
-      if (chunk === closed) {
-        controller.close();
-      } else {
-        controller.enqueue(chunk);
-      }
+    start(constroller) {
+      readerController = constroller;
     },
-  });
+  }, readableStrategy);
   const writer = new WritableStream<T>({
     write(chunk) {
-      queue.push(chunk);
+      readerController.enqueue(chunk);
     },
     close() {
-      waiter.resolve(closed);
+      readerController.close();
     },
-  });
+  }, writableStrategy);
   return { reader, writer };
 }
