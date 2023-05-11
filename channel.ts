@@ -32,10 +32,14 @@ export function channel<T>(
 ): Channel<T> {
   writableStrategy ??= new CountQueuingStrategy({ highWaterMark: 1 });
   readableStrategy ??= new CountQueuingStrategy({ highWaterMark: 0 });
+  let readerCancelled = false;
   let readerController: ReadableStreamDefaultController<T>;
   const reader = new ReadableStream<T>({
     start(constroller) {
       readerController = constroller;
+    },
+    cancel() {
+      readerCancelled = true;
     },
   }, readableStrategy);
   const writer = new WritableStream<T>({
@@ -43,7 +47,9 @@ export function channel<T>(
       readerController.enqueue(chunk);
     },
     close() {
-      readerController.close();
+      if (!readerCancelled) {
+        readerController.close();
+      }
     },
   }, writableStrategy);
   return { reader, writer };
