@@ -1,11 +1,11 @@
-import { concat } from "https://deno.land/std@0.186.0/bytes/mod.ts";
+import { concat } from "https://deno.land/std@0.187.0/bytes/mod.ts";
 import { collect } from "./collect.ts";
 
 /**
  * Reads all available bytes from a given `ReadableStream<Uint8Array>` and concatenates them into a single `Uint8Array`.
  *
  * ```ts
- * import { assertEquals } from "https://deno.land/std@0.186.0/testing/asserts.ts";
+ * import { assertEquals } from "https://deno.land/std@0.187.0/testing/asserts.ts";
  * import { readAll } from "./read_all.ts";
  *
  * const encoder = new TextEncoder();

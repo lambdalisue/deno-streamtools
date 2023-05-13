@@ -7,7 +7,7 @@ export type WriteAllOptions = PipeOptions & {
  * Writes all data in a Uint8Array to a writable stream in chunk-size units.
  *
  * ```ts
- * import { assertEquals } from "https://deno.land/std@0.186.0/testing/asserts.ts";
+ * import { assertEquals } from "https://deno.land/std@0.187.0/testing/asserts.ts";
  * import { writeAll } from "./write_all.ts";
  *
  * const encoder = new TextEncoder();

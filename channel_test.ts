@@ -1,11 +1,11 @@
 import {
   assertEquals,
   assertRejects,
-} from "https://deno.land/std@0.186.0/testing/asserts.ts";
+} from "https://deno.land/std@0.187.0/testing/asserts.ts";
 import {
   deadline,
   DeadlineError,
-} from "https://deno.land/std@0.186.0/async/mod.ts";
+} from "https://deno.land/std@0.187.0/async/mod.ts";
 import { provide } from "./provide.ts";
 import { pop } from "./pop.ts";
 import { push } from "./push.ts";

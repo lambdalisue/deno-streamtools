@@ -1,4 +1,4 @@
-import { channel as channelV3 } from "https://deno.land/x/streamtools@v0.3.0/channel.ts";
+import { channel as channelV3 } from "https://deno.land/x/streamtools@v0.3.0/channel.ts#=";
 import { channel } from "./channel.ts";
 
 Deno.bench("channel", { group: "channel", baseline: true }, async () => {
