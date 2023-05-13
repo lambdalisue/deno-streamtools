@@ -20,7 +20,7 @@ import { channel } from "./channel.ts";
 import { push } from "./push.ts";
 import { pop } from "./pop.ts";
 
-const [reader, writer] = channel<number>();
+const { reader, writer } = channel<number>();
 
 await push(writer, 1);
 await push(writer, 2);
