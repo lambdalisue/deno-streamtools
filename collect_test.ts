@@ -1,11 +1,5 @@
-import {
-  assertEquals,
-  assertRejects,
-} from "https://deno.land/std@0.187.0/testing/asserts.ts";
-import {
-  deadline,
-  DeadlineError,
-} from "https://deno.land/std@0.187.0/async/deadline.ts";
+import { assertEquals, assertRejects } from "@std/assert";
+import { deadline, DeadlineError } from "@std/async";
 import { collect } from "./collect.ts";
 
 Deno.test("collect returns an empty array for an empty stream", async () => {

@@ -1,4 +1,4 @@
-import { assertEquals } from "https://deno.land/std@0.187.0/testing/asserts.ts";
+import { assertEquals } from "@std/assert";
 import { collect } from "./collect.ts";
 import { channel } from "./channel.ts";
 import { pipeThroughFrom } from "./pipe_through_from.ts";

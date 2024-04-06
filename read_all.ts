@@ -1,4 +1,4 @@
-import { concat } from "https://deno.land/std@0.187.0/bytes/mod.ts";
+import { concat } from "@std/bytes";
 import { collect } from "./collect.ts";
 
 /**
@@ -33,5 +33,5 @@ export async function readAll(
   options: PipeOptions = {},
 ): Promise<Uint8Array> {
   const chunks = await collect(stream, options);
-  return concat(...chunks);
+  return concat(chunks);
 }
