@@ -1,12 +1,11 @@
 # streamtools
 
-[![deno land](http://img.shields.io/badge/available%20on-deno.land/x-lightgrey.svg?logo=deno)](https://deno.land/x/streamtools)
+[![jsr](https://img.shields.io/jsr/v/%40lambdalisue/streamtools?logo=javascript&logoColor=white)](https://jsr.io/@lambdalisue/streamtools)
+[![denoland](https://img.shields.io/github/v/release/lambdalisue/deno-streamtools?logo=deno&label=denoland)](https://github.com/lambdalisue/deno-streamtools/releases)
 [![deno doc](https://doc.deno.land/badge.svg)](https://doc.deno.land/https/deno.land/x/streamtools/mod.ts)
 [![Test](https://github.com/lambdalisue/deno-streamtools/workflows/Test/badge.svg)](https://github.com/lambdalisue/deno-streamtools/actions?query=workflow%3ATest)
 
-This is a [Deno][deno] module that provides utilities for handling Streams API.
-
-[deno]: https://deno.land/
+This is a TypeScript module that provides utilities for handling Streams API.
 
 ## Usage
 
@@ -138,7 +137,7 @@ console.log(results); // [1, 2, 3]
 and concatenates them into a single `Uint8Array`.
 
 ```ts
-import { assertEquals } from "https://deno.land/std@0.186.0/testing/asserts.ts";
+import { assertEquals } from "jsr:@std/assert";
 import { readAll } from "./read_all.ts";
 
 const encoder = new TextEncoder();
@@ -157,7 +156,7 @@ assertEquals(result, encoder.encode("HelloWorld"));
 units.
 
 ```ts
-import { assertEquals } from "https://deno.land/std@0.186.0/testing/asserts.ts";
+import { assertEquals } from "jsr:@std/assert";
 import { writeAll } from "./write_all.ts";
 
 const encoder = new TextEncoder();
