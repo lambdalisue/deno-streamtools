@@ -1,4 +1,4 @@
-import { assertEquals } from "https://deno.land/std@0.187.0/testing/asserts.ts";
+import { assertEquals } from "@std/assert";
 import { provide } from "./provide.ts";
 
 Deno.test("provide writes all values to stream", async () => {

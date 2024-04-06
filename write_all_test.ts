@@ -1,5 +1,5 @@
-import { assertEquals } from "https://deno.land/std@0.187.0/testing/asserts.ts";
-import { concat } from "https://deno.land/std@0.187.0/bytes/mod.ts";
+import { assertEquals } from "@std/assert";
+import { concat } from "@std/bytes";
 import { writeAll } from "./write_all.ts";
 
 Deno.test("writeAll", async (t) => {
@@ -14,7 +14,7 @@ Deno.test("writeAll", async (t) => {
         },
       });
       await writeAll(stream, encoder.encode("HelloWorld"), { chunkSize: 3 });
-      assertEquals(concat(...chunks), encoder.encode("HelloWorld"));
+      assertEquals(concat(chunks), encoder.encode("HelloWorld"));
       assertEquals(chunks, [
         encoder.encode("Hel"),
         encoder.encode("loW"),

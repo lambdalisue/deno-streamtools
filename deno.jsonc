@@ -1,7 +1,11 @@
 {
   "tasks": {
-    "test": "deno test --no-lock --unstable -A --parallel --doc",
-    "check": "deno check --no-lock --unstable $(find . -name '*.ts')",
-    "upgrade": "deno run --no-lock -A https://deno.land/x/udd/main.ts $(find . -name '*.ts')"
+    "test": "deno test -A --parallel --doc --shuffle",
+    "check": "deno check **/*.ts"
+  },
+  "imports": {
+    "@std/assert": "jsr:@std/assert@^0.221.0",
+    "@std/async": "jsr:@std/async@^0.221.0",
+    "@std/bytes": "jsr:@std/bytes@^0.221.0"
   }
 }
