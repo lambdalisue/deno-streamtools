@@ -1,3 +1,10 @@
+> [!WARNING]
+>
+> **Deprecated**
+> Use [`@core/streamutil`](https://jsr.io/@core/streamutil) instead.
+>
+> - https://github.com/jsr-core/streamutil
+
 # streamtools
 
 [![jsr](https://img.shields.io/jsr/v/%40lambdalisue/streamtools?logo=javascript&logoColor=white)](https://jsr.io/@lambdalisue/streamtools)
